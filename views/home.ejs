@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Conversation Similarity</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+
+  </head>
+  <body>
+    <h1>Conversation Similarity</h1>
+
+    <form action="/" method="post">
+      <label for="conversation1">Conversation 1:</label><br />
+      <textarea id="conversation1" name="conversation1" rows="5" cols="50"><% if (conversation1 !== null) { %><%= conversation1 %><% } %></textarea><br />
+
+      <label for="conversation2">Conversation 2:</label><br />
+      <textarea id="conversation2" name="conversation2" rows="5" cols="50"><% if (conversation2 !== null) { %><%= conversation2 %>><% } %></textarea><br />
+
+      <button type="submit">Calculate similarity</button>
+    </form>
+    <div id="results">
+      <% if (result !== null) { %>
+        <h2 id="similarity-score">Similarity score: <%= result %></h2>
+
+        <div class="array-container">
+          <h3>Tokenized conversation 1:</h3>
+          <p class="array-display"><%= tokenizedConversationArray1 %></p>
+        </div>
+
+        <div class="array-container">
+          <h3>Tokenized conversation 2:</h3>
+          <p class="array-display"><%= tokenizedConversationArray2 %></p>
+        </div>
+
+        <div class="array-container">
+          <h3>Transformed conversation 1:</h3>
+          <p class="array-display"><%= transformedArr1 %></p>
+        </div>
+
+        <div class="array-container">
+          <h3>Transformed conversation 2:</h3>
+          <p class="array-display"><%= transformedArr2 %></p>
+        </div>
+      <% } %>
+    </div>
+  </body>
+</html>
