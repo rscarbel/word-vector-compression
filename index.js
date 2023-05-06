@@ -3,20 +3,38 @@ const bodyParser = require("body-parser");
 const parseInputs = require("./scripts/parseInputs");
 const tokenizedParagraph = require("./scripts/tokenizeParagraph");
 const discreteCosineTransform = require("./scripts/discreteCosineTransform");
+require("dotenv").config();
+const { Pool } = require("pg");
+const { PGUSER, PGDATABASE, PGHOST, PGPORT } = process.env;
+
+const pool = new Pool({
+  user: PGUSER,
+  host: PGHOST,
+  database: PGDATABASE,
+  password: "",
+  port: PGPORT,
+});
 
 const app = express();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 const port = 3000;
+pool.connect();
 
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
 
-app.post("/", (req, res) => {
+app.post("/", async (req, res) => {
   const { conversation1, conversation2 } = req.body;
-  const result = parseInputs(conversation1, conversation2);
-  const tokenizedConversationArray1 = tokenizedParagraph(conversation1);
-  const tokenizedConversationArray2 = tokenizedParagraph(conversation2);
+  const result = await parseInputs(pool, conversation1, conversation2);
+  const tokenizedConversationArray1 = await tokenizedParagraph(
+    pool,
+    conversation1
+  );
+  const tokenizedConversationArray2 = await tokenizedParagraph(
+    pool,
+    conversation2
+  );
   const transformedArr1 = discreteCosineTransform(tokenizedConversationArray1);
   const transformedArr2 = discreteCosineTransform(tokenizedConversationArray2);
   console.log(result);

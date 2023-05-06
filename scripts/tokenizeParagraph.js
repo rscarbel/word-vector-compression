@@ -1,19 +1,18 @@
-const wordMap = require("../wordMap");
-const tokenizeWord = require("./tokenizeWord");
+const getWordToken = require("./getWordToken");
 
-// This function is not intelligently tokenizing words, to make the algorithm work accurately, this needs to reference a word vector
-const tokenizeParagraph = (paragraph) => {
-  const parsedParagraph = paragraph.replace(/[^a-zA-Z\n]/g, " ").toLowerCase();
-  const tokenizedParagraph = parsedParagraph.split(" ").map((word) => {
-    const token = wordMap[word.trim().toLowerCase()];
-    return token ? token : tokenizeWord(word); // if token is not found, we'll just make one up
-  });
-  const filteredTokenizedParagraph = tokenizedParagraph.filter((token) => {
-    return token;
-  });
-  return filteredTokenizedParagraph;
+const tokenizeParagraph = async (pool, paragraph) => {
+  const parsedParagraph = paragraph.toLowerCase();
+  const words = parsedParagraph.split(" ");
+
+  const tokenizedParagraph = [];
+  for (const word of words) {
+    const token = await getWordToken(pool, word.trim().toLowerCase());
+    if (token) {
+      tokenizedParagraph.push(token);
+    }
+  }
+
+  return tokenizedParagraph;
 };
 
 module.exports = tokenizeParagraph;
-
-// optimizations here could be to lemetize words, and perhaps remove stop words
