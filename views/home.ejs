@@ -19,29 +19,12 @@
       <button type="submit">Calculate similarity</button>
     </form>
     <div id="results">
-      <% if (result !== null) { %>
-         <h2 class="primary-metric">Euclidean Distance: <%= euclideanDistance %></h2>
-        <h2 class="primary-metric">Similarity score: <%= result %></h2>
-
-        <div class="array-container">
-          <h3>Tokenized conversation 1:</h3>
-          <p class="array-display"><%= tokenizedConversationArray1 %></p>
-        </div>
-
-        <div class="array-container">
-          <h3>Tokenized conversation 2:</h3>
-          <p class="array-display"><%= tokenizedConversationArray2 %></p>
-        </div>
-
-        <div class="array-container">
-          <h3>Transformed conversation 1:</h3>
-          <p class="array-display"><%= transformedArr1 %></p>
-        </div>
-
-        <div class="array-container">
-          <h3>Transformed conversation 2:</h3>
-          <p class="array-display"><%= transformedArr2 %></p>
-        </div>
+      <% if (distance !== null) { %>
+        <% if (error !== null) { %>
+          <p class="error"><%= error %></p>
+        <% } %>
+         <h2 class="primary-metric">Euclidean Distance: <%= distance %></h2>
+        <h2 class="primary-metric">Similarity score: <%= cosineSimilarity %></h2>
       <% } %>
     </div>
   </body>

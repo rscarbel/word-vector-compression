@@ -16,7 +16,7 @@ const getWordMatrix = async (word) => {
 
       return vectorValues;
     } else {
-      console.error("Word not found in the word_vectors table:", word);
+      console.error("Word not found in the word_vectors_300 table:", word);
       return null;
     }
   } catch (err) {

@@ -1,13 +1,14 @@
 const getWordMatrix = require("./getWordMatrix");
 const stopWords = require("../stopWords");
 
-const getVectorSpaceMatrix = async (paragraph) => {
-  const parsedParagraph = paragraph.toLowerCase();
+const convertToMatrix = async (paragraph) => {
+  const parsedParagraph = paragraph.replace(/[^a-zA-Z ]/g, " ").toLowerCase();
   const words = parsedParagraph.split(" ");
   const vectorSpaceMatrix = [];
 
   for (const word of words) {
-    if (stopWords.includes(word)) {
+    word.trim();
+    if (stopWords.includes(word) || word === "") {
       continue;
     }
     const matrixPoint = await getWordMatrix(word.trim().toLowerCase());
@@ -19,4 +20,4 @@ const getVectorSpaceMatrix = async (paragraph) => {
   return vectorSpaceMatrix;
 };
 
-module.exports = getVectorSpaceMatrix;
+module.exports = convertToMatrix;

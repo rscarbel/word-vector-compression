@@ -105,6 +105,13 @@ button {
   margin: auto;
 }
 
+.error {
+  margin: auto;
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;

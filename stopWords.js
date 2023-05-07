@@ -224,6 +224,7 @@ const stopWords = [
   "we're",
   "who've",
   "your",
+  " ",
 ];
 
 module.exports = stopWords;
