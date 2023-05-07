@@ -2,13 +2,12 @@ const calculateMeanPosition = require("./calculateMeanPosition");
 const getVectorSpaceMatrix = require("./getVectorSpaceMatrix");
 
 const calculateConversationEuclideanDistance = async (
-  pool,
   conversation1,
   conversation2
 ) => {
   try {
-    const matrix1 = await getVectorSpaceMatrix(pool, conversation1);
-    const matrix2 = await getVectorSpaceMatrix(pool, conversation2);
+    const matrix1 = await getVectorSpaceMatrix(conversation1);
+    const matrix2 = await getVectorSpaceMatrix(conversation2);
     const meanPosition1 = calculateMeanPosition(matrix1);
     const meanPosition2 = calculateMeanPosition(matrix2);
     let sumOfSquares = 0;

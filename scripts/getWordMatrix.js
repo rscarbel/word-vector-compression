@@ -1,5 +1,7 @@
-const getWordMatrix = async (pool, word) => {
-  const query = "SELECT * FROM word_vectors WHERE word = $1";
+const pool = require("../db");
+
+const getWordMatrix = async (word) => {
+  const query = "SELECT * FROM word_vectors_300 WHERE word = $1";
   const values = [word];
 
   try {
@@ -8,7 +10,7 @@ const getWordMatrix = async (pool, word) => {
       const row = res.rows[0];
       const vectorValues = [];
 
-      for (let i = 1; i <= 50; i++) {
+      for (let i = 1; i <= 300; i++) {
         vectorValues.push(row[`vector${i}`]);
       }
 

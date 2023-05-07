@@ -1,15 +1,15 @@
-const calculateMeanPosition = (points) => {
-  if (points.length === 0) {
+const calculateMeanPosition = (vectorMatrix) => {
+  if (vectorMatrix.length === 0) {
     throw new Error("Invalid input. Expected a non-empty array.");
   }
 
-  const dimensionSize = points[0].length;
+  const dimensionSize = vectorMatrix[0].length;
 
-  const numPoints = points.length;
+  const numPoints = vectorMatrix.length;
   const meanPosition = new Array(dimensionSize).fill(0);
 
   for (let i = 0; i < numPoints; i++) {
-    const point = points[i];
+    const point = vectorMatrix[i];
 
     if (point.length !== dimensionSize) {
       throw new Error(

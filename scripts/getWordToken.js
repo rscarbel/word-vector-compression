@@ -1,4 +1,6 @@
-const getWordToken = async (pool, word) => {
+const pool = require("../db");
+
+const getWordToken = async (word) => {
   const query = "SELECT * FROM word_tokens WHERE word = $1";
   const values = [word];
   try {

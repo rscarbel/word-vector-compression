@@ -4,17 +4,7 @@ const parseInputs = require("./scripts/parseInputs");
 const tokenizedParagraph = require("./scripts/tokenizeParagraph");
 const discreteCosineTransform = require("./scripts/discreteCosineTransform");
 const calculateConversationEuclideanDistance = require("./scripts/calculateConversationEuclideanDistance");
-require("dotenv").config();
-const { Pool } = require("pg");
-const { PGUSER, PGDATABASE, PGHOST, PGPORT } = process.env;
-
-const pool = new Pool({
-  user: PGUSER,
-  host: PGHOST,
-  database: PGDATABASE,
-  password: "",
-  port: PGPORT,
-});
+const pool = require("./db");
 
 const app = express();
 app.use(express.static("public"));
@@ -27,19 +17,12 @@ app.set("views", __dirname + "/views");
 
 app.post("/", async (req, res) => {
   const { conversation1, conversation2 } = req.body;
-  const result = await parseInputs(pool, conversation1, conversation2);
-  const tokenizedConversationArray1 = await tokenizedParagraph(
-    pool,
-    conversation1
-  );
-  const tokenizedConversationArray2 = await tokenizedParagraph(
-    pool,
-    conversation2
-  );
+  const result = await parseInputs(conversation1, conversation2);
+  const tokenizedConversationArray1 = await tokenizedParagraph(conversation1);
+  const tokenizedConversationArray2 = await tokenizedParagraph(conversation2);
   const transformedArr1 = discreteCosineTransform(tokenizedConversationArray1);
   const transformedArr2 = discreteCosineTransform(tokenizedConversationArray2);
   const euclideanDistance = await calculateConversationEuclideanDistance(
-    pool,
     conversation1,
     conversation2
   );
