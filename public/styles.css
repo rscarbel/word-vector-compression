@@ -67,7 +67,7 @@ button {
 .loading {
   pointer-events: none;
   opacity: 0.5;
-  background-color: #aaa;
+  background-color: #525252;
 }
 
 #output {
