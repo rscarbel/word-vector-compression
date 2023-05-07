@@ -1,11 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const compareTwoConversations = require("./scripts/compareTwoConversations");
+const jaccardSimilarity = require("./scripts/jaccardSimilarity");
 const pool = require("./db");
 
 const app = express();
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 const port = 3000;
 pool.connect();
 
@@ -20,11 +21,14 @@ app.post("/", async (req, res) => {
     conversation2
   );
 
+  const jaccard = jaccardSimilarity(conversation1, conversation2);
+
   res.render("home", {
     conversation1,
     conversation2,
     distance,
     cosineSimilarity,
+    jaccard,
     error,
   });
 });
@@ -35,6 +39,7 @@ app.get("/", (req, res) => {
     cosineSimilarity: null,
     conversation1: null,
     conversation2: null,
+    jaccard: null,
     error: null,
   });
 });
