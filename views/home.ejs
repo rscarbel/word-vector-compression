@@ -20,7 +20,8 @@
     </form>
     <div id="results">
       <% if (result !== null) { %>
-        <h2 id="similarity-score">Similarity score: <%= result %></h2>
+         <h2 class="primary-metric">Euclidean Distance: <%= euclideanDistance %></h2>
+        <h2 class="primary-metric">Similarity score: <%= result %></h2>
 
         <div class="array-container">
           <h3>Tokenized conversation 1:</h3>

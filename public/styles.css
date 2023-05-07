@@ -101,7 +101,7 @@ button {
   word-wrap: break-word;
 }
 
-#similarity-score {
+.primary-metric {
   margin: auto;
 }
 

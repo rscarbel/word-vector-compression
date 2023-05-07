@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const parseInputs = require("./scripts/parseInputs");
 const tokenizedParagraph = require("./scripts/tokenizeParagraph");
 const discreteCosineTransform = require("./scripts/discreteCosineTransform");
+const calculateConversationEuclideanDistance = require("./scripts/calculateConversationEuclideanDistance");
 require("dotenv").config();
 const { Pool } = require("pg");
 const { PGUSER, PGDATABASE, PGHOST, PGPORT } = process.env;
@@ -37,6 +38,11 @@ app.post("/", async (req, res) => {
   );
   const transformedArr1 = discreteCosineTransform(tokenizedConversationArray1);
   const transformedArr2 = discreteCosineTransform(tokenizedConversationArray2);
+  const euclideanDistance = await calculateConversationEuclideanDistance(
+    pool,
+    conversation1,
+    conversation2
+  );
   console.log(result);
   res.render("home", {
     result,
@@ -48,6 +54,7 @@ app.post("/", async (req, res) => {
     )} ]`,
     transformedArr1: `[ ${transformedArr1.join(", ")} ]`,
     transformedArr2: `[ ${transformedArr2.join(", ")} ]`,
+    euclideanDistance,
     conversation1,
     conversation2,
   });
@@ -56,6 +63,7 @@ app.post("/", async (req, res) => {
 app.get("/", (req, res) => {
   res.render("home", {
     result: null,
+    euclideanDistance: null,
     tokenizedConversationArray1: null,
     tokenizedConversationArray2: null,
     transformedArr1: null,
