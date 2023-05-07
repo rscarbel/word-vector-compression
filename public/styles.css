@@ -54,7 +54,7 @@ textarea {
 
 button {
   display: block;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 10px 20px;
   background-color: #4CAF50;
   color: #fff;
@@ -113,6 +113,13 @@ button {
 
 .primary-metric {
   margin: auto;
+}
+
+.nav-button {
+  background-color: #3a4eb1;
+}
+.nav-button:hover {
+  background-color: #000a97;
 }
 
 .error {

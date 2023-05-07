@@ -11,12 +11,16 @@
         submitButton.classList.add('loading');
         submitButton.disabled = true;
       }
+
+      function navigateToManyConversations() {
+        window.location.href = "/many-conversations";
+      }
     </script>
   </head>
   <body>
     <h1>Conversation Similarity</h1>
 
-    <form action="/" method="post"  onsubmit="handleFormSubmit()">
+    <form action="/compare-two" method="post"  onsubmit="handleFormSubmit()">
       <label for="conversation1">Conversation 1:</label><br />
       <textarea id="conversation1" name="conversation1" rows="5" cols="50"><% if (conversation1 !== null) { %><%= conversation1 %><% } %></textarea><br />
 
@@ -35,5 +39,6 @@
         <h2 class="primary-metric">Conceptual similarity: <span class="result"><%= cosineSimilarity %></span></h2>
       <% } %>
     </div>
+    <button class="nav-button" onclick="navigateToManyConversations()">Go to Many Conversations</button>
   </body>
 </html>

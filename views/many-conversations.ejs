@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Most Similar</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script>
+      function handleFormSubmit() {
+        const submitButton = document.getElementById('submit-button');
+        submitButton.innerHTML = 'Loading...';
+        submitButton.classList.add('loading');
+        submitButton.disabled = true;
+
+        const conversationInputs = document.querySelectorAll('textarea[name="conversation"]');
+        const conversations = Array.from(conversationInputs).map((input) => input.value);
+        const conversationsInput = document.createElement('input');
+        conversationsInput.type = 'hidden';
+        conversationsInput.name = 'conversations';
+        conversationsInput.value = JSON.stringify(conversations);
+        document.getElementById('conversations-container').appendChild(conversationsInput);
+      }
+
+      function createNewConversation() {
+        const generateButton = document.getElementById('generate-button');
+        const conversationsContainer = document.getElementById('conversations-container');
+        const newTextArea = document.createElement('textarea');
+        newTextArea.name = 'conversation';
+        newTextArea.rows = '5';
+        newTextArea.cols = '50';
+        conversationsContainer.appendChild(newTextArea);
+      }
+
+      function navigateToHome() {
+        window.location.href = "/";
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Compare multiple data sets to a benchmark</h1>
+
+    <form action="/many-conversations" method="post" onsubmit="handleFormSubmit()">
+      <label for="primaryConversation">Primary:</label><br />
+      <textarea id="primaryConversation" name="primaryConversation" rows="5" cols="50" required><% if (primaryConversation !== null) { %><%= primaryConversation %><% } %></textarea><br />
+
+      <div id="conversations-container">
+        <% conversations.forEach((conversation) => { %>
+          <textarea name="conversation" rows="5" cols="50"><%= conversation %></textarea>
+        <% }); %>
+      </div>
+
+      <button id="generate-button" type="button" onclick="createNewConversation()">+ New Conversation</button>
+
+      <button id="submit-button" type="submit">Calculate Most Similar</button>
+    </form>
+    <div id="results">
+      <% if (mostSimilar !== null) { %>
+        <% if (error !== null) { %>
+          <p class="error"><%= error %></p>
+        <% } %>
+        <h2 class="primary-metric">Conceptual similarity: <span class="result"><%= cosineSimilarity %></span></h2>
+        <h2 class="primary-metric">Most Similar:</h2>
+        <p class="primary-metric result"><%= mostSimilar %></p>
+      <% } %>
+    </div>
+    <button class="nav-button" onclick="navigateToHome()">Home</button>
+  </body>
+</html>
