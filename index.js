@@ -8,7 +8,7 @@ const pool = require("./db");
 const app = express();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-const port = 3000;
+const port = 3007;
 pool.connect();
 
 app.set("view engine", "ejs");
