@@ -8,6 +8,14 @@ const getVectorValues = (row) => {
   return vectorValues;
 };
 
+const generateVectorColumns = () => {
+  const columns = [];
+  for (let i = 1; i <= 300; i++) {
+    columns.push(`vector${i}`);
+  }
+  return columns.join(", ");
+};
+
 const executeQuery = async (query, queryValues) => {
   try {
     const res = await pool.query(query, queryValues);
@@ -22,20 +30,17 @@ const executeQuery = async (query, queryValues) => {
 };
 
 const getWordMatrix = async (word) => {
-  const query = "SELECT * FROM common_crawl_300 WHERE word = $1";
-  const wordWithoutPunctuation = word.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "");
-  const values = [word];
-  const secondAttemptValues = [wordWithoutPunctuation];
+  const sanitizedWord = word
+    .replace(/[^a-zA-Z]|(\[[0-9]+\])/g, "")
+    .toLowerCase();
+  const vectorColumns = generateVectorColumns();
+  const query = `SELECT ${vectorColumns} FROM common_crawl_300 WHERE word = $1 OR word = $2`;
+  const values = [word, sanitizedWord];
 
   const result = await executeQuery(query, values);
   if (result) {
     return result;
   } else {
-    const secondAttemptResult = await executeQuery(query, secondAttemptValues);
-    if (secondAttemptResult) {
-      console.log("After removing punctuation, found:", word);
-      return secondAttemptResult;
-    }
     console.error("Word not found in the common_crawl_300 table:", word);
     return null;
   }
