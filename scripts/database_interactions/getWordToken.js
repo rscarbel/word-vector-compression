@@ -1,4 +1,4 @@
-const pool = require("../db");
+const pool = require("../../db");
 
 const getWordToken = async (word) => {
   const query = "SELECT * FROM word_tokens WHERE word = $1";
