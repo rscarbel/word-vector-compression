@@ -1,4 +1,4 @@
-const getWordMatrix = require("./getWordMatrix");
+const getWordMatrix = require("./database_interactions/getWordMatrix");
 const stopWords = require("../stopWords");
 
 const convertToMatrix = async (paragraph) => {

@@ -1,5 +1,6 @@
 const convertToMatrix = require("./convertToMatrix");
 const calculateMeanPosition = require("./operations_using_matrices/calculateMeanPosition");
+const getNearestNeighbor = require("./database_interactions/getNearestNeighbor");
 const vectorCosineSimilarity = require("./operations_using_matrices/vectorCosineSimilarity");
 const euclideanDistance = require("./operations_using_matrices/euclideanDistance");
 
@@ -19,12 +20,18 @@ const compareTwoConversations = async (conversation1, conversation2) => {
   }
   const matrixMean1 = calculateMeanPosition(matrix1);
   const matrixMean2 = calculateMeanPosition(matrix2);
+  const nearestNeighbor1 = await getNearestNeighbor(matrixMean1);
+  const nearestNeighbor2 = await getNearestNeighbor(matrixMean2);
+  console.log(nearestNeighbor1);
+  console.log(nearestNeighbor2);
   const cosineSimilarity = vectorCosineSimilarity(matrixMean1, matrixMean2);
   const distance = euclideanDistance(matrixMean1, matrixMean2);
 
   return {
     matrixMean1,
     matrixMean2,
+    nearestNeighbor1,
+    nearestNeighbor2,
     cosineSimilarity,
     distance,
     error: null,
