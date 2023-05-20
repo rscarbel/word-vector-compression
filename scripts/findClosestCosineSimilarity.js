@@ -1,7 +1,6 @@
 const convertToMatrix = require("./convertToMatrix");
 const calculateMeanPosition = require("./operations_using_matrices/calculateMeanPosition");
 const vectorCosineSimilarity = require("./operations_using_matrices/vectorCosineSimilarity");
-const euclideanDistance = require("./operations_using_matrices/euclideanDistance");
 
 const findClosestCosineSimilarity = async (
   primaryConversation,

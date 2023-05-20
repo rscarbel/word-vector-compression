@@ -44,10 +44,8 @@ app.post("/many-conversations", async (req, res) => {
 app.post("/compare-two", async (req, res) => {
   const { conversation1, conversation2 } = req.body;
 
-  const { cosineSimilarity, distance, error } = await compareTwoConversations(
-    conversation1,
-    conversation2
-  );
+  const { cosineSimilarity, distance, message, error } =
+    await compareTwoConversations(conversation1, conversation2);
 
   const jaccard = jaccardSimilarity(conversation1, conversation2);
 
@@ -57,6 +55,7 @@ app.post("/compare-two", async (req, res) => {
     distance,
     cosineSimilarity,
     jaccard,
+    message,
     error,
   });
 });
@@ -77,6 +76,7 @@ app.get("/", (_req, res) => {
     cosineSimilarity: null,
     conversation1: null,
     conversation2: null,
+    message: null,
     jaccard: null,
     error: null,
   });

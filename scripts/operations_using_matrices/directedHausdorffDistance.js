@@ -1,4 +1,4 @@
-const euclideanDistance = require("../euclideanDistance");
+const euclideanDistance = require("./euclideanDistance");
 
 const directedHausdorffDistance = (setA, setB) => {
   let maxDistance = -Infinity;

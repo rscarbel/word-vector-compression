@@ -30,6 +30,9 @@
       <button id="submit-button" type="submit">Calculate similarity</button>
     </form>
     <div id="results">
+      <% if (message !== null) { %>
+        <p class="message"><%- message %></p>
+      <% } %>
       <% if (distance !== null) { %>
         <% if (error !== null) { %>
           <p class="error"><%= error %></p>
