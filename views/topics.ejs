@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Conversation Topics</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script>
+      function handleFormSubmit() {
+        const submitButton = document.getElementById('submit-button');
+        submitButton.innerHTML = 'Loading...';
+        submitButton.classList.add('loading');
+        submitButton.disabled = true;
+      }
+
+      function navigateToManyConversations() {
+        window.location.href = "/many-conversations";
+      }
+      function navigateToHome() {
+        window.location.href = "/";
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Conversation Topics</h1>
+
+    <form action="/topics" method="post"  onsubmit="handleFormSubmit()">
+      <label for="conversation">Conversation:</label><br />
+      <textarea id="conversation" name="conversation" rows="5" cols="50"><% if (conversation !== null) { %><%- conversation %><% } %></textarea><br />
+
+      <button id="submit-button" type="submit">Calculate Topics</button>
+    </form>
+    <div id="results">
+      <% if (message !== null) { %>
+        <p class="message"><%- message %></p>
+      <% } %>
+    </div>
+    <button class="nav-button" onclick="navigateToManyConversations()">Go to Many Conversations</button>
+    <button class="nav-button" onclick="navigateToHome()">Go to Home</button>
+  </body>
+</html>

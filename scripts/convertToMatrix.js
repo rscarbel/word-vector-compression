@@ -1,7 +1,7 @@
 const getWordMatrix = require("./database_interactions/getWordMatrix");
 const stopWords = require("../stopWords");
 
-const convertToMatrix = async (paragraph) => {
+const convertToMatrix = async (paragraph, keepWords = false) => {
   const words = paragraph.split(/\s+/);
   const vectorSpaceMatrix = [];
 
@@ -14,7 +14,11 @@ const convertToMatrix = async (paragraph) => {
 
     const matrixPoint = await getWordMatrix(trimmedWord);
 
-    if (matrixPoint) vectorSpaceMatrix.push(matrixPoint);
+    if (!matrixPoint) continue;
+
+    if (keepWords) matrixPoint.push(trimmedWord);
+
+    vectorSpaceMatrix.push(matrixPoint);
   }
 
   return vectorSpaceMatrix;

@@ -1,4 +1,4 @@
-const pointsEqual = (point1, point2) => {
+const arePointsEqual = (point1, point2) => {
   for (let i = 0; i < point1.length; i++) {
     if (point1[i] !== point2[i]) {
       return false;
@@ -7,4 +7,4 @@ const pointsEqual = (point1, point2) => {
   return true;
 };
 
-module.exports = pointsEqual;
+module.exports = arePointsEqual;

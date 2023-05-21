@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const compareTwoConversations = require("./scripts/compareTwoConversations");
 const jaccardSimilarity = require("./scripts/jaccardSimilarity");
 const findClosestCosineSimilarity = require("./scripts/findClosestCosineSimilarity");
+const conversationTopics = require("./scripts/conversationTopics");
 const pool = require("./db");
 
 const app = express();
@@ -60,6 +61,19 @@ app.post("/compare-two", async (req, res) => {
   });
 });
 
+app.post("/topics", async (req, res) => {
+  const { conversation } = req.body;
+
+  const { cosineSimilarity, distance, message, error } =
+    await conversationTopics(conversation);
+
+  res.render("topics", {
+    conversation,
+    message,
+    error,
+  });
+});
+
 app.get("/many-conversations", (_req, res) => {
   res.render("many-conversations", {
     mostSimilar: null,
@@ -67,6 +81,14 @@ app.get("/many-conversations", (_req, res) => {
     primaryConversation: null,
     conversations: [],
     error: null,
+  });
+});
+
+app.get("/topics", (_req, res) => {
+  res.render("topics", {
+    conversation: "",
+    error: null,
+    message: "",
   });
 });
 
