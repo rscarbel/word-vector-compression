@@ -44,7 +44,7 @@ const dbscan = (nodes, eps, minPts) => {
     cluster.map((clusterId) => nodes[clusterId][nodes[clusterId].length - 1])
   );
 
-  return { clusters: clusterWords, noise: noiseWords };
+  return { clusters, clusterWords, noise: noiseWords };
 };
 
 

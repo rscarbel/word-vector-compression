@@ -1,25 +1,26 @@
 const pool = require("../../db");
 
 const getNearestNeighbor = async (vector) => {
-  const generateColumnNames = () => {
-    const columnNames = [];
-    for (let i = 1; i <= 300; i++) {
-      columnNames.push(`vector${i}`);
-    }
-    return columnNames.join(", ");
-  };
+  let columnNames = [];
+  for (let i = 1; i <= 300; i++) {
+    columnNames.push(`vector${i}`);
+  }
+  columnNames = columnNames.join(", ");
 
   const generateDistanceExpression = () => {
-    return vector
-      .map((value, index) => {
-        return `POWER(vector${index + 1} - ${value}, 2)`;
-      })
-      .join(" + ");
+    let expression = "";
+    for (let i = 0; i < vector.length; i++) {
+      expression += `POWER(vector${i + 1} - ${vector[i]}, 2)`;
+      if (i < vector.length - 1) {
+        expression += " + ";
+      }
+    }
+    return expression;
   };
 
   const query = `
     SELECT word, 
-      SQRT(${generateDistanceExpression()}) as distance
+      (${generateDistanceExpression()}) as distance
     FROM common_crawl_300
     ORDER BY distance ASC
     LIMIT 1;
