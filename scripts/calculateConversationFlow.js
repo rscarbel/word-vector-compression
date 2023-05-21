@@ -6,6 +6,7 @@ const calculateMeanPosition = require("./operations_using_matrices/calculateMean
 const { error } = require("console");
 
 const MINIMUM_DISTANCE = 3;
+const epsilon = 2;
 
 const calculateConversationFlow = async (conversation) => {
   const topics = [];
@@ -62,10 +63,8 @@ const calculateConversationFlow = async (conversation) => {
     }
   }
 
-  const minPts = Math.ceil(matrix.length * 0.01) + 1;
-  const epsilon = 4;
-
   for (let i = 0; i < clusters.length; i++) {
+    const minPts = Math.ceil(clusters[i].length * 0.01) + 1;
     const dbscanResult = await dbscanValues(clusters[i], epsilon, minPts);
     const subClusters = dbscanResult.clusters || [];
     const longestSubCluster = subClusters.reduce((a, b) => {
