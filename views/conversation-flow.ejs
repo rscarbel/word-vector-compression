@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Conversation Topics</title>
+    <title>Conversation Flow</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
     <script>
       function handleFormSubmit() {
@@ -18,13 +18,13 @@
       function navigateToHome() {
         window.location.href = "/";
       }
-      function navigateToConversationFlow() {
-        window.location.href = "/conversation-flow";
+      function navigateToTopics() {
+        window.location.href = "/topics";
       }
     </script>
   </head>
   <body>
-    <h1>Conversation Topics</h1>
+    <h1>Track the progression of a conversation</h1>
 
     <form action="/topics" method="post"  onsubmit="handleFormSubmit()">
       <label for="conversation">Conversation:</label><br />
@@ -38,7 +38,7 @@
       <% } %>
     </div>
     <button class="nav-button" onclick="navigateToManyConversations()">Go to Many Conversations</button>
-    <button class="nav-button" onclick="navigateToConversationFlow()">Conversation Flow</button>
+    <button class="nav-button" onclick="navigateToTopics()">Topics</button>
     <button class="nav-button" onclick="navigateToHome()">Go to Home</button>
   </body>
 </html>

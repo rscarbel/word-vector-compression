@@ -64,10 +64,21 @@ app.post("/compare-two", async (req, res) => {
 app.post("/topics", async (req, res) => {
   const { conversation } = req.body;
 
-  const { cosineSimilarity, distance, message, error } =
-    await conversationTopics(conversation);
+  const { message, error } = await conversationTopics(conversation);
 
   res.render("topics", {
+    conversation,
+    message,
+    error,
+  });
+});
+
+app.post("/conversation-flow", async (req, res) => {
+  const { conversation } = req.body;
+
+  const { message, error } = await conversationTopics(conversation);
+
+  res.render("conversation-flow", {
     conversation,
     message,
     error,
@@ -86,6 +97,14 @@ app.get("/many-conversations", (_req, res) => {
 
 app.get("/topics", (_req, res) => {
   res.render("topics", {
+    conversation: "",
+    error: null,
+    message: "",
+  });
+});
+
+app.get("/conversation-flow", (_req, res) => {
+  res.render("conversation-flow", {
     conversation: "",
     error: null,
     message: "",
