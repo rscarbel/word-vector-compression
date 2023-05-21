@@ -8,6 +8,8 @@ const dbscan = (nodes, eps, minPts) => {
   let wordClusters = [];
   let visited = new Set();
   let noise = new Set();
+  // creating a map for fast lookup
+  let dataMap = new Map(data.map((value, index) => [value, index]));
 
   for (let pointId = 0; pointId < data.length; pointId++) {
     if (visited.has(pointId)) {
@@ -24,8 +26,8 @@ const dbscan = (nodes, eps, minPts) => {
       expandCluster(data, neighbors, cluster, eps, minPts, visited, noise);
 
       for (let i = 0; i < cluster.length; i++) {
-        let pointId2 = data.indexOf(cluster[i]);
-        if (pointId2 !== -1) {
+        let pointId2 = dataMap.get(cluster[i]);
+        if (pointId2 !== undefined) {
           clusterIds.push(pointId2);
         }
       }
@@ -44,5 +46,6 @@ const dbscan = (nodes, eps, minPts) => {
 
   return { clusters: clusterWords, noise: noiseWords };
 };
+
 
 module.exports = dbscan;

@@ -2,14 +2,17 @@ const getWordMatrix = require("./database_interactions/getWordMatrix");
 const stopWords = require("../stopWords");
 
 const convertToMatrix = async (paragraph, keepWords = false) => {
-  const words = paragraph.split(/\s+/);
+  const replaceSpecialCharacterWithSpace = paragraph.replace(
+    /[^a-zA-Z0-9-]/g,
+    " "
+  );
+  const words = replaceSpecialCharacterWithSpace.split(/\s+/);
   const vectorSpaceMatrix = [];
 
   for (const word of words) {
     const trimmedWord = word.trim();
 
-    if (trimmedWord === "") continue;
-    if (!trimmedWord.match(/[a-z0-9]/i)) continue;
+    if (trimmedWord.length < 3) continue;
     if (stopWords.includes(trimmedWord.toLowerCase())) continue;
 
     const matrixPoint = await getWordMatrix(trimmedWord);

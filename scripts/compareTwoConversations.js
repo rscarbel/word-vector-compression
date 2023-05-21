@@ -43,12 +43,6 @@ const compareTwoConversations = async (conversation1, conversation2) => {
 
   if (error) console.error("Error in compareTwoConversations:", error);
 
-  const minPts = Math.ceil(Math.pow(matrix1.length, 1 / 5) + 1);
-  const dbscan1 = await dbscan(matrix1, 1.5, minPts);
-  message += `<br>${dbscan1.length} topics in conversation 1.`;
-  const dbscan2 = await dbscan(matrix2, 1.5, minPts);
-  message += `<br>${dbscan2.length} topics in conversation 2.`;
-
   return {
     matrixMean1,
     matrixMean2,

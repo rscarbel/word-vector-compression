@@ -14,16 +14,17 @@ const conversationTopics = async (conversation) => {
     };
   }
 
-  const minPts = Math.ceil(Math.pow(matrix.length, 1 / 5) + 1);
+  const minPts = Math.ceil(Math.pow(matrix.length, 1 / 3));
 
   const dbscanResult = await dbscan(matrix, 1.5, minPts, true);
   const clusters = dbscanResult.clusters || [];
   const noise = dbscanResult.noise || [];
 
-  console.log("dbscanResult:", dbscanResult);
-
-  message += `<br>${clusters.length} topics in conversation.`;
-  message += `<br>Topics in conversation: ${clusters}.`;
+  message += `DBSCAN with epsilon = 1.5 and minPts = ${minPts}.`;
+  message += `<br>${clusters.length} topics in conversation.<br>`;
+  message += `<br>Topics in conversation: ${clusters.join(
+    ", "
+  )}.<br>--------------------------<br>`;
   message += `<br>Noise in conversation: ${noise.join(", ")}.`;
 
   if (error) console.error("Error in conversationTopics:", error);
