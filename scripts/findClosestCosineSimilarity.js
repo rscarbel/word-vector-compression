@@ -1,4 +1,4 @@
-const convertToMatrix = require("./convertToMatrix");
+const convertToMatrixByWords = require("./convertToMatrixByWords");
 const calculateMeanPosition = require("./operations_using_matrices/calculateMeanPosition");
 const vectorCosineSimilarity = require("./operations_using_matrices/vectorCosineSimilarity");
 
@@ -6,7 +6,7 @@ const findClosestCosineSimilarity = async (
   primaryConversation,
   conversations
 ) => {
-  const primaryMatrix = await convertToMatrix(primaryConversation);
+  const primaryMatrix = await convertToMatrixByWords(primaryConversation);
 
   if (primaryMatrix.length === 0) {
     return {
@@ -23,7 +23,7 @@ const findClosestCosineSimilarity = async (
 
   for (let i = 0; i < conversations.length; i++) {
     const conversation = conversations[i];
-    const matrix = await convertToMatrix(conversation);
+    const matrix = await convertToMatrixByWords(conversation);
     if (matrix.length === 0) {
       continue;
     }

@@ -4,6 +4,7 @@ const compareTwoConversations = require("./scripts/compareTwoConversations");
 const jaccardSimilarity = require("./scripts/jaccardSimilarity");
 const findClosestCosineSimilarity = require("./scripts/findClosestCosineSimilarity");
 const conversationTopics = require("./scripts/conversationTopics");
+const calculateConversationFlow = require("./scripts/calculateConversationFlow");
 const pool = require("./db");
 
 const app = express();
@@ -76,7 +77,7 @@ app.post("/topics", async (req, res) => {
 app.post("/conversation-flow", async (req, res) => {
   const { conversation } = req.body;
 
-  const { message, error } = await conversationTopics(conversation);
+  const { message, error } = await calculateConversationFlow(conversation);
 
   res.render("conversation-flow", {
     conversation,

@@ -1,5 +1,5 @@
 const tokenizeParagraph = require("./tokenizeParagraph");
-const getVectorSpaceMatrix = require("./convertToMatrix");
+const getVectorSpaceMatrix = require("./convertToMatrixByWords");
 const calculateMeanPosition = require("./operations_using_matrices/calculateMeanPosition");
 
 const getMeanLocation = async (conversation) => {

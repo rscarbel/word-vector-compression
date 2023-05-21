@@ -1,7 +1,7 @@
 const getWordMatrix = require("./database_interactions/getWordMatrix");
 const stopWords = require("../stopWords");
 
-const convertToMatrix = async (paragraph, keepWords = false) => {
+const convertToMatrixByWords = async (paragraph, keepWords = false) => {
   const replaceSpecialCharacterWithSpace = paragraph.replace(
     /[^a-zA-Z0-9-]/g,
     " "
@@ -27,4 +27,4 @@ const convertToMatrix = async (paragraph, keepWords = false) => {
   return vectorSpaceMatrix;
 };
 
-module.exports = convertToMatrix;
+module.exports = convertToMatrixByWords;

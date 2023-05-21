@@ -1,8 +1,7 @@
 const rangeQuery = require("./rangeQuery");
 const expandCluster = require("./expandCluster");
 
-const dbscan = (nodes, eps, minPts) => {
-  // nodes is an array of arrays, where each array is a point and the last element is the word, e.g. [[1, 2, 3, "hello"], [4, 5, 6, "world"]]
+const dbscanWords = (nodes, eps, minPts) => {
   const data = nodes.map((node) => node.slice(0, node.length - 1));
   let clusters = [];
   let wordClusters = [];
@@ -47,5 +46,4 @@ const dbscan = (nodes, eps, minPts) => {
   return { clusters, clusterWords, noise: noiseWords };
 };
 
-
-module.exports = dbscan;
+module.exports = dbscanWords;

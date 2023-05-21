@@ -1,4 +1,4 @@
-const convertToMatrix = require("./convertToMatrix");
+const convertToMatrixByWords = require("./convertToMatrixByWords");
 const calculateMeanPosition = require("./operations_using_matrices/calculateMeanPosition");
 const vectorCosineSimilarity = require("./operations_using_matrices/vectorCosineSimilarity");
 const euclideanDistance = require("./operations_using_matrices/euclideanDistance");
@@ -7,8 +7,8 @@ const { error } = require("console");
 
 const compareTwoConversations = async (conversation1, conversation2) => {
   let message = "";
-  const matrix1 = await convertToMatrix(conversation1);
-  const matrix2 = await convertToMatrix(conversation2);
+  const matrix1 = await convertToMatrixByWords(conversation1);
+  const matrix2 = await convertToMatrixByWords(conversation2);
 
   if (matrix1.length === 0 || matrix2.length === 0) {
     return {

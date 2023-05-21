@@ -26,11 +26,11 @@
   <body>
     <h1>Track the progression of a conversation</h1>
 
-    <form action="/topics" method="post"  onsubmit="handleFormSubmit()">
+    <form action="/conversation-flow" method="post"  onsubmit="handleFormSubmit()">
       <label for="conversation">Conversation:</label><br />
       <textarea id="conversation" name="conversation" rows="5" cols="50"><% if (conversation !== null) { %><%- conversation %><% } %></textarea><br />
 
-      <button id="submit-button" type="submit">Calculate Topics</button>
+      <button id="submit-button" type="submit">Calculate Flow</button>
     </form>
     <div class="message" id="results">
       <% if (message !== null) { %>

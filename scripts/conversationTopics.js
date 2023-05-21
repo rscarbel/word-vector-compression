@@ -1,12 +1,12 @@
-const convertToMatrix = require("./convertToMatrix");
-const dbscan = require("./operations_using_matrices/DBSCAN/dbscan");
+const convertToMatrixByWords = require("./convertToMatrixByWords");
+const dbscanWords = require("./operations_using_matrices/DBSCAN/dbscanWords");
 const getNearestNeighbor = require("./database_interactions/getNearestNeighbor");
 const calculateMeanPosition = require("./operations_using_matrices/calculateMeanPosition");
 const { error } = require("console");
 
 const conversationTopics = async (conversation) => {
   let message = "";
-  const matrix = await convertToMatrix(conversation, true);
+  const matrix = await convertToMatrixByWords(conversation, true);
 
   if (matrix.length === 0) {
     return {
@@ -19,7 +19,7 @@ const conversationTopics = async (conversation) => {
   const minPts = Math.ceil(matrix.length * 0.012) + 1;
   const epsilon = 4;
 
-  const dbscanResult = await dbscan(matrix, epsilon, minPts, true);
+  const dbscanResult = await dbscanWords(matrix, epsilon, minPts);
   const clusters = dbscanResult.clusters || [];
   const noise = dbscanResult.noise || [];
   const clusterWords = dbscanResult.clusterWords || [];
