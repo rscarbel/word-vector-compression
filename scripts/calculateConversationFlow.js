@@ -12,13 +12,19 @@ const calculateConversationFlow = async (conversation) => {
 
   const minPts = Math.ceil(matrix.length * 0.012) + 1;
 
+  const currentTime = new Date().getTime();
   const dbscanResult = await dbscanWithAllData(matrix, epsilon, minPts);
-  const clusterWords = dbscanResult.clusterWords || [];
+  const newTime = new Date().getTime();
+  const timeElapsed = newTime - currentTime;
+  const timeInSeconds = timeElapsed / 1000;
+  console.log("DBSCAN runtime (seconds):", timeInSeconds);
   const flattenedClusterWords = dbscanResult.flattenedClusterWords || [];
 
-  const topicProgression = [];
+  const sentences = lowerCaseConversation.split(/(?<=[.!?])\s+(?=\D|$)/);
 
-  const sentences = lowerCaseConversation.split(/(?<=[.?!])\s+(?=[A-Z])/);
+  console.log("sentences:", sentences.length);
+
+  const sentenceMembership = [];
 
   sentences.forEach((sentence, i) => {
     const replaceSpecialCharacterWithSpace = sentence.replace(
@@ -26,22 +32,59 @@ const calculateConversationFlow = async (conversation) => {
       " "
     );
     const words = replaceSpecialCharacterWithSpace.split(/\s+/);
-    const sentenceTopics = new Set();
 
-    words.forEach((word) => {
-      const singlularWord = inflection.singularize(word);
-      if (
-        flattenedClusterWords.includes(singlularWord) &&
-        !topicProgression[i - 1]?.includes(singlularWord)
-      ) {
-        sentenceTopics.push(singlularWord);
+    const sentenceComposition = [];
+    const foundWords = [];
+    totalTopicCount = 0;
+
+    for (let i = 0; i < words.length; i++) {
+      const word = words[i];
+      const singularWord = inflection.singularize(word) || word;
+      const isTopic = flattenedClusterWords.includes(singularWord);
+
+      if (!isTopic) continue;
+
+      totalTopicCount++;
+
+      if (!foundWords.includes(singularWord)) {
+        foundWords.push(singularWord);
+        sentenceComposition.push({
+          word: singularWord,
+          count: 1,
+        });
+      } else {
+        for (let j = 0; j < sentenceComposition.length; j++) {
+          if (sentenceComposition[j].word === singularWord) {
+            sentenceComposition[j].count++;
+          }
+        }
       }
-    });
+    }
 
-    topicProgression.push(sentenceTopics);
+    for (let i = 0; i < sentenceComposition.length; i++) {
+      const roundedPercentage = Math.round(
+        (sentenceComposition[i].count / totalTopicCount) * 100
+      );
+      sentenceComposition[i].percentage = `${roundedPercentage}%`;
+    }
+
+    sentenceMembership.push(sentenceComposition);
   });
 
-  const message = `Topics:<br>${topicProgression.join(" <br> ")}`;
+  prettifiedSentenceMembership = sentenceMembership
+    .map((sentence) => {
+      return sentence
+        .map((word) => {
+          return `${word.word} (${word.percentage})`;
+        })
+        .join(", ");
+    })
+    .join("<br>");
+
+  const message = `
+  <strong>Topics:</strong><br>${flattenedClusterWords.join(", ")}
+  <br>---------------------<br>
+  <strong>Sentence Membership:</strong><br>${prettifiedSentenceMembership}`;
 
   return {
     message,

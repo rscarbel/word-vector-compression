@@ -14,7 +14,7 @@ const matrixWithWords = async (paragraph) => {
   for (let i = 0; i < words.length; i++) {
     const word = words[i];
     const trimmedWord = word.trim();
-    const singularWord = inflection.singularize(trimmedWord);
+    const singularWord = inflection.singularize(trimmedWord) || trimmedWord;
 
     if (singularWord.length < 3) continue;
     if (stopWords.includes(singularWord)) continue;
