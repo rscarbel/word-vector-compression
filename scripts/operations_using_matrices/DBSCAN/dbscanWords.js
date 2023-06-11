@@ -22,7 +22,7 @@ const dbscanWords = (nodes, eps, minPts) => {
     } else {
       let cluster = [];
       let clusterIds = [];
-      expandCluster(data, neighbors, cluster, eps, minPts, visited, noise);
+      expandCluster(data, neighbors, cluster, eps, minPts, visited);
 
       for (let i = 0; i < cluster.length; i++) {
         let pointId2 = dataMap.get(cluster[i]);
