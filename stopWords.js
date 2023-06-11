@@ -570,6 +570,9 @@ const stopWords = [
   "yourselves",
   "z",
   "zero",
+  "various",
+  "variou",
+  "thi",
 ];
 
 module.exports = stopWords;

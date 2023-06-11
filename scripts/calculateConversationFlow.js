@@ -68,8 +68,8 @@ const calculateConversationFlow = async (conversation) => {
       ).toFixed(2);
       sentenceComposition[i].percentage = roundedPercentage;
     }
-
-    sentenceMembership.push(sentenceComposition);
+    if (sentenceComposition.length)
+      sentenceMembership.push(sentenceComposition);
   });
 
   prettifiedSentenceMembership = sentenceMembership
