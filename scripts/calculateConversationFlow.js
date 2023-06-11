@@ -23,8 +23,6 @@ const calculateConversationFlow = async (conversation) => {
 
   const sentences = lowerCaseConversation.split(/(?<=[.!?])\s+(?=\D|$)/);
 
-  console.log("sentences:", sentences.length);
-
   const sentenceMembership = [];
 
   sentences.forEach((sentence, i) => {
@@ -87,6 +85,7 @@ const calculateConversationFlow = async (conversation) => {
   <strong>Algorithm Time:</strong> ${DBSCANTime} seconds<br>
   <strong>Topics:</strong><br>${flattenedClusterWords.join(", ")}
   <br>---------------------<br>
+  <strong>Number of sentences:</strong> ${sentences.length}<br>
   <strong>Sentence Membership:</strong><br>${prettifiedSentenceMembership}`;
 
   return {

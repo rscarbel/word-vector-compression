@@ -573,6 +573,10 @@ const stopWords = [
   "various",
   "variou",
   "thi",
+  "including",
+  "particular",
+  "include",
+  "includes",
 ];
 
 module.exports = stopWords;
