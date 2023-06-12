@@ -2,7 +2,8 @@
   - run `npm install` to install dependencies
   - run `npm start` to start the project
 
-The project will then be available at `localhost:3000`
+The project will then be available at `localhost:3007`
+The primary page I use is `http://localhost:3007/conversation-flow`
 
 Just paste the conversations you want to compare in the text boxes and click on the button to compare them.
 The algorithm is not using a real word-vector, so the frequency values are arbitrary and you are unlikely to get an accurate result.
