@@ -23,11 +23,9 @@ const executeQuery = async (query, queryValues) => {
 };
 
 const getWordMatrix = async (word) => {
-  const sanitizedWord = word
-    .replace(/[^a-zA-Z]|(\[[0-9]+\])/g, "")
-    .toLowerCase();
-  const query = `SELECT ${VECTOR_COLUMNS} FROM common_crawl_300 WHERE word = $1 OR word = $2`;
-  const values = [word, sanitizedWord];
+
+  const query = `SELECT ${VECTOR_COLUMNS} FROM common_crawl_300 WHERE word = $1`;
+  const values = [word];
 
   const result = await executeQuery(query, values);
 
