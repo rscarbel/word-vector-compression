@@ -8,36 +8,31 @@ const matrixWithWords = async (paragraph) => {
     " "
   );
   const words = replaceSpecialCharacterWithSpace.split(/\s+/);
-  const foundWords = [];
+  const wordCount = new Map();
   const vectorSpaceMatrix = [];
 
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
+  words.forEach((word) => {
     const trimmedWord = word.trim();
     const singularWord = inflection.singularize(trimmedWord) || trimmedWord;
 
-    if (singularWord.length < 3) continue;
-    if (stopWords.includes(singularWord)) continue;
+    if (singularWord.length < 3 || stopWords.has(singularWord)) return;
 
-    const matrixPoint = await getWordMatrix(singularWord);
+    wordCount.set(singularWord, (wordCount.get(singularWord) || 0) + 1);
+  });
 
-    if (!matrixPoint) continue;
+  const wordsArray = Array.from(wordCount.keys());
+  const matrixPoints = await Promise.all(wordsArray.map(getWordMatrix));
 
-    if (!foundWords.includes(singularWord)) {
-      foundWords.push(singularWord);
+  matrixPoints.forEach((matrixPoint, index) => {
+    if (matrixPoint) {
       vectorSpaceMatrix.push({
-        word: singularWord,
+        word: wordsArray[index],
         matrixPoint: matrixPoint,
-        count: 1,
+        count: wordCount.get(wordsArray[index]),
       });
-    } else {
-      for (let j = 0; j < vectorSpaceMatrix.length; j++) {
-        if (vectorSpaceMatrix[j].word === singularWord) {
-          vectorSpaceMatrix[j].count++;
-        }
-      }
     }
-  }
+  });
+
   return vectorSpaceMatrix;
 };
 
