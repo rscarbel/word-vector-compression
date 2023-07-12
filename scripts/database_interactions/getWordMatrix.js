@@ -1,13 +1,5 @@
 const pool = require("../../db");
 
-const VECTOR_COLUMNS = Array.from(
-  { length: 300 },
-  (_, i) => `vector${i + 1}`
-).join(", ");
-
-const getVectorValues = (row) =>
-  Array.from({ length: 300 }, (_, i) => row[`vector${i + 1}`]);
-
 const executeQuery = async (query, queryValues) => {
   try {
     const res = await pool.query({
@@ -15,7 +7,7 @@ const executeQuery = async (query, queryValues) => {
       text: query,
       values: queryValues,
     });
-    return res.rows.length > 0 ? getVectorValues(res.rows[0]) : null;
+    return res.rows.length > 0 ? res.rows[0].vector : null;
   } catch (err) {
     console.error("Error in getWordMatrix:", err);
     return null;
@@ -23,14 +15,13 @@ const executeQuery = async (query, queryValues) => {
 };
 
 const getWordMatrix = async (word) => {
-
-  const query = `SELECT ${VECTOR_COLUMNS} FROM common_crawl_300 WHERE word = $1`;
+  const query = `SELECT vector FROM word_vectors WHERE word = $1`;
   const values = [word];
 
   const result = await executeQuery(query, values);
 
   if (!result) {
-    console.error("Word not found in the common_crawl_300 table:", word);
+    console.error("Word not found in the word_vectors table:", word);
   }
 
   return result;

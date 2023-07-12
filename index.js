@@ -51,7 +51,7 @@ app.post("/compare-two", async (req, res) => {
 
   const jaccard = jaccardSimilarity(conversation1, conversation2);
 
-  res.render("home", {
+  res.render("compare-two", {
     conversation1,
     conversation2,
     distance,
@@ -112,8 +112,8 @@ app.get("/conversation-flow", (_req, res) => {
   });
 });
 
-app.get("/", (_req, res) => {
-  res.render("home", {
+app.get("/compare-two", (_req, res) => {
+  res.render("compare-two", {
     distance: null,
     cosineSimilarity: null,
     conversation1: null,
@@ -121,6 +121,14 @@ app.get("/", (_req, res) => {
     message: null,
     jaccard: null,
     error: null,
+  });
+});
+
+app.get("/", (_req, res) => {
+  res.render("conversation-flow", {
+    conversation: "",
+    error: null,
+    message: "",
   });
 });
 

@@ -1,4 +1,4 @@
-const matrixWithWords = require("./matrixWithWords");
+const matrixWithWordsArray = require("./matrixWithWordsArray");
 const dbscanWithAllData = require("./operations_using_matrices/DBSCAN/dbscanWithAllData");
 const inflection = require("inflection");
 
@@ -7,7 +7,7 @@ const epsilon = 3;
 const calculateConversationFlow = async (conversation) => {
   lowerCaseConversation = conversation.toLowerCase();
   const timeBeforeLookup = new Date().getTime();
-  const matrix = await matrixWithWords(lowerCaseConversation);
+  const matrix = await matrixWithWordsArray(lowerCaseConversation);
   const timeAfterLookup = new Date().getTime();
   const lookupTimeElapsed = timeAfterLookup - timeBeforeLookup;
   const lookupTimeInSeconds = lookupTimeElapsed / 1000;
