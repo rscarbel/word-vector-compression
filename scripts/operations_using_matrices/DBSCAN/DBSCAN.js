@@ -1,10 +1,10 @@
 const rangeQuery = require("./rangeQuery");
-const expandClusterWithCounts = require("./expandClusterWithCounts");
+const expandCluster = require("./expandCluster");
 
 const MINIMUM_COUNT = 1;
 
 // the node structure is an array of objects like this: [{ word: string, matrixPoints: [float], count: integer }]
-const dbscanWithAllData = (nodes, eps, minPts) => {
+const DBSCAN = (nodes, eps, minPts) => {
   const clusters = [];
   const visited = new Set();
 
@@ -24,15 +24,7 @@ const dbscanWithAllData = (nodes, eps, minPts) => {
 
     if (neighbors.length + nodes[pointId].count - MINIMUM_COUNT >= minPts) {
       const cluster = [];
-      expandClusterWithCounts(
-        nodes,
-        values,
-        neighbors,
-        cluster,
-        eps,
-        minPts,
-        visited
-      );
+      expandCluster(nodes, values, neighbors, cluster, eps, minPts, visited);
       clusters.push(cluster);
 
       const words = cluster.map((item) => item.word);
@@ -51,4 +43,4 @@ const dbscanWithAllData = (nodes, eps, minPts) => {
   };
 };
 
-module.exports = dbscanWithAllData;
+module.exports = DBSCAN;

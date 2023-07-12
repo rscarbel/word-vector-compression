@@ -1,4 +1,4 @@
-const getWordMatrix = require("./database_interactions/getWordMatrix");
+const getWordVectors = require("./database_interactions/getWordVectors");
 const stopWords = require("../stopWords");
 
 const convertToMatrixByWords = async (paragraph, keepWords = false) => {
@@ -15,7 +15,7 @@ const convertToMatrixByWords = async (paragraph, keepWords = false) => {
     if (trimmedWord.length < 3) continue;
     if (stopWords.includes(trimmedWord.toLowerCase())) continue;
 
-    const matrixPoint = await getWordMatrix(trimmedWord);
+    const matrixPoint = await getWordVectors(trimmedWord);
 
     if (!matrixPoint) continue;
 

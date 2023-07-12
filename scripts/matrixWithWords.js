@@ -1,4 +1,4 @@
-const getWordMatrix = require("./database_interactions/getWordMatrix");
+const getWordVectors = require("./database_interactions/getWordVectors");
 const inflection = require("inflection");
 const stopWords = require("../stopWords");
 
@@ -9,7 +9,6 @@ const matrixWithWords = async (paragraph) => {
   );
   const words = replaceSpecialCharacterWithSpace.split(/\s+/);
   const wordCount = new Map();
-  const vectorSpaceMatrix = [];
 
   words.forEach((word) => {
     const trimmedWord = word.trim();
@@ -17,21 +16,17 @@ const matrixWithWords = async (paragraph) => {
 
     if (singularWord.length < 3 || stopWords.has(singularWord)) return;
 
-    wordCount.set(singularWord, (wordCount.get(singularWord) || 0) + 1);
+    const currentCount = wordCount.get(singularWord);
+    wordCount.set(singularWord, currentCount ? currentCount + 1 : 1);
   });
 
   const wordsArray = Array.from(wordCount.keys());
-  const matrixPoints = await Promise.all(wordsArray.map(getWordMatrix));
-
-  matrixPoints.forEach((matrixPoint, index) => {
-    if (matrixPoint) {
-      vectorSpaceMatrix.push({
-        word: wordsArray[index],
-        matrixPoint: matrixPoint,
-        count: wordCount.get(wordsArray[index]),
-      });
-    }
-  });
+  const matrixRows = await getWordVectors(wordsArray);
+  const vectorSpaceMatrix = matrixRows.map((row) => ({
+    word: row.word,
+    matrixPoint: row.vector,
+    count: wordCount.get(row.word),
+  }));
 
   return vectorSpaceMatrix;
 };
