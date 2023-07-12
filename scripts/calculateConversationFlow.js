@@ -122,6 +122,9 @@ const calculateConversationFlow = async (conversation) => {
 
   const prettifiedCompressedSentences = Object.entries(compressedData)
     .map(([topicName, sentence]) => {
+      const totalWeight = sentence.color
+        ? ""
+        : `<br>Total weight: ${sentence.totalWeight.toFixed(2)}`;
       return `<br><span style="color: ${
         sentence.color
       }"><strong>${topicName}</strong>: ${sentence.sequences
@@ -137,7 +140,9 @@ const calculateConversationFlow = async (conversation) => {
             word.end - word.start + 1
           } }`;
         })
-        .join(",&nbsp;&nbsp;&nbsp;")}</span><br> `;
+        .join(",&nbsp;&nbsp;&nbsp;")}<br><br>Total count: ${
+        sentence.count
+      }${totalWeight}</span><br>`;
     })
     .join("<br><br>");
 
