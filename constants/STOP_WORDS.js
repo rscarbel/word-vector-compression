@@ -1,4 +1,9 @@
-const stopWords = new Set([
+const PRONOUNS = require("./PRONOUNS");
+const FUNCTION_WORDS = require("./FUNCTION_WORDS");
+
+const STOP_WORDS = new Set([
+  ...PRONOUNS,
+  ...FUNCTION_WORDS,
   "a",
   "a's",
   "able",
@@ -577,6 +582,8 @@ const stopWords = new Set([
   "particular",
   "include",
   "includes",
+  "um",
+  "uh",
 ]);
 
-module.exports = stopWords;
+module.exports = STOP_WORDS;

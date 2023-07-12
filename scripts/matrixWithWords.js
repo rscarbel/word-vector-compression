@@ -1,12 +1,13 @@
 const getWordVectors = require("./database_interactions/getWordVectors");
 const inflection = require("inflection");
-const stopWords = require("../stopWords");
+const STOP_WORDS = require("../constants/STOP_WORDS");
 
 const matrixWithWords = async (paragraph) => {
   const replaceSpecialCharacterWithSpace = paragraph.replace(
-    /[^a-zA-Z0-9-]/g,
+    /[^a-zA-Z\d-' ]/g,
     " "
   );
+
   const words = replaceSpecialCharacterWithSpace.split(/\s+/);
   const wordCount = new Map();
 
@@ -14,7 +15,7 @@ const matrixWithWords = async (paragraph) => {
     const trimmedWord = word.trim();
     const singularWord = inflection.singularize(trimmedWord) || trimmedWord;
 
-    if (singularWord.length < 3 || stopWords.has(singularWord)) return;
+    if (singularWord.length < 3 || STOP_WORDS.has(singularWord)) return;
 
     const currentCount = wordCount.get(singularWord);
     wordCount.set(singularWord, currentCount ? currentCount + 1 : 1);

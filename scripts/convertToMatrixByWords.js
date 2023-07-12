@@ -1,5 +1,5 @@
 const getWordVectors = require("./database_interactions/getWordVectors");
-const stopWords = require("../stopWords");
+const STOP_WORDS = require("../constants/STOP_WORDS");
 
 const convertToMatrixByWords = async (paragraph, keepWords = false) => {
   const replaceSpecialCharacterWithSpace = paragraph.replace(
@@ -13,7 +13,7 @@ const convertToMatrixByWords = async (paragraph, keepWords = false) => {
     const trimmedWord = word.trim();
 
     if (trimmedWord.length < 3) continue;
-    if (stopWords.includes(trimmedWord.toLowerCase())) continue;
+    if (STOP_WORDS.includes(trimmedWord.toLowerCase())) continue;
 
     const matrixPoint = await getWordVectors(trimmedWord);
 
