@@ -1,4 +1,4 @@
-const convertToMatrixByWords = require("./convertToMatrixByWords");
+const matrixWithWords = require("./matrixWithWords");
 const calculateMeanPosition = require("./operations_using_matrices/calculateMeanPosition");
 const vectorCosineSimilarity = require("./operations_using_matrices/vectorCosineSimilarity");
 const euclideanDistance = require("./operations_using_matrices/euclideanDistance");
@@ -7,10 +7,14 @@ const { error } = require("console");
 
 const compareTwoConversations = async (conversation1, conversation2) => {
   let message = "";
-  const matrix1 = await convertToMatrixByWords(conversation1);
-  const matrix2 = await convertToMatrixByWords(conversation2);
 
-  if (matrix1.length === 0 || matrix2.length === 0) {
+  const processedCoversation1 = await matrixWithWords(conversation1);
+  const processedCoversation2 = await matrixWithWords(conversation2);
+
+  if (
+    processedCoversation1.length === 0 ||
+    processedCoversation2.length === 0
+  ) {
     return {
       matrixMean1: null,
       matrixMean2: null,
@@ -20,6 +24,8 @@ const compareTwoConversations = async (conversation1, conversation2) => {
         "No words in one or both conversations. Please note, stop words are not included in the comparison.",
     };
   }
+  const matrix1 = processedCoversation1.map((row) => row.matrixPoint);
+  const matrix2 = processedCoversation2.map((row) => row.matrixPoint);
   const matrixMean1 = calculateMeanPosition(matrix1);
   const matrixMean2 = calculateMeanPosition(matrix2);
   const hausdorff = hausdorffDistance(matrix1, matrix2);

@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <title>Conversation Similarity</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
     <script>
       function handleFormSubmit() {
-        const submitButton = document.getElementById('submit-button');
-        submitButton.innerHTML = 'Loading...';
-        submitButton.classList.add('loading');
+        const submitButton = document.getElementById("submit-button");
+        submitButton.innerHTML = "Loading...";
+        submitButton.classList.add("loading");
         submitButton.disabled = true;
       }
 
@@ -26,30 +26,44 @@
   <body>
     <h1>Conversation Similarity</h1>
 
-    <form action="/compare-two" method="post"  onsubmit="handleFormSubmit()">
+    <form action="/compare-two" method="post" onsubmit="handleFormSubmit()">
       <label for="conversation1">Conversation 1:</label><br />
-      <textarea id="conversation1" name="conversation1" rows="5" cols="50"><% if (conversation1 !== null) { %><%= conversation1 %><% } %></textarea><br />
+      <textarea id="conversation1" name="conversation1" rows="5" cols="50">
+<% if (conversation1 !== null) { %><%= conversation1 %><% } %></textarea
+      ><br />
 
       <label for="conversation2">Conversation 2:</label><br />
-      <textarea id="conversation2" name="conversation2" rows="5" cols="50"><% if (conversation2 !== null) { %><%= conversation2 %><% } %></textarea><br />
+      <textarea id="conversation2" name="conversation2" rows="5" cols="50">
+<% if (conversation2 !== null) { %><%= conversation2 %><% } %></textarea
+      ><br />
 
       <button id="submit-button" type="submit">Calculate similarity</button>
     </form>
     <div id="results">
       <% if (message !== null) { %>
-        <p class="message"><%- message %></p>
+      <p class="message"><%- message %></p>
+      <% } %> <% if (distance !== null) { %> <% if (error !== null) { %>
+      <p class="error"><%= error %></p>
       <% } %>
-      <% if (distance !== null) { %>
-        <% if (error !== null) { %>
-          <p class="error"><%= error %></p>
-        <% } %>
-        <h3 class="primary-metric">Jaccard Similarity: <span class="result"><%= jaccard %></span></h3>
-         <h2 class="primary-metric">Euclidean Distance: <span class="result"><%= distance %></span></h2>
-        <h2 class="primary-metric">Conceptual similarity: <span class="result"><%= cosineSimilarity %></span></h2>
+      <h3 class="primary-metric">
+        Jaccard Similarity: <span class="result"><%= jaccard %></span>
+      </h3>
+      <h2 class="primary-metric">
+        Euclidean Distance of Mean Cluster:
+        <span class="result"><%= distance %></span>
+      </h2>
+      <h2 class="primary-metric">
+        Cosine similarity:
+        <span class="result"><%= cosineSimilarity %></span>
+      </h2>
       <% } %>
     </div>
-    <button class="nav-button" onclick="navigateToManyConversations()">Go to Many Conversations</button>
+    <button class="nav-button" onclick="navigateToManyConversations()">
+      Go to Many Conversations
+    </button>
     <button class="nav-button" onclick="navigateToTopics()">Topics</button>
-    <button class="nav-button" onclick="navigateToConversationFlow()">Conversation Flow</button>
+    <button class="nav-button" onclick="navigateToConversationFlow()">
+      Conversation Flow
+    </button>
   </body>
 </html>

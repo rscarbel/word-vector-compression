@@ -35,7 +35,7 @@ const expandCluster = (
       let neighbors2 = rangeQuery(values, pointId2, eps);
 
       if (neighbors2.length + data[pointId2].count - MINIMUM_COUNT >= minPts) {
-        neighbors.push(...neighbors2.filter((n) => !visited.includes(n)));
+        neighbors.push(...neighbors2.filter((n) => !visited.has(n)));
       }
     }
 

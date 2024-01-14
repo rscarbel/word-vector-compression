@@ -13,7 +13,7 @@ const convertToMatrixByWords = async (paragraph, keepWords = false) => {
     const trimmedWord = word.trim();
 
     if (trimmedWord.length < 3) continue;
-    if (STOP_WORDS.includes(trimmedWord.toLowerCase())) continue;
+    if (STOP_WORDS.has(trimmedWord.toLowerCase())) continue;
 
     const matrixPoint = await getWordVectors(trimmedWord);
 
