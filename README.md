@@ -4,6 +4,4 @@
 # Demo
 https://github.com/rscarbel/word-vector-compression/assets/40727301/713873b4-32e7-4521-9046-1131d0067ac1
 
-Fair warning, the code itself is not super clean on this. I just wanted to spit out a proof of concept that you could compress sentences into smaller units based off cluster in vector space. The 
-
-![Screenshot 2023-05-05 at 9 39 56 AM](https://user-images.githubusercontent.com/40727301/236474598-3f4e6b63-7793-4f64-bfec-5365c6484c36.png)
+Fair warning, the code itself is not super clean on this. I just wanted to spit out a proof of concept that you could compress sentences into smaller units based on clusters in vector space.
